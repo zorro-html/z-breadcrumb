@@ -1,0 +1,109 @@
+<!--
+  # breadcrumb
+
+  面包屑
+
+  ## 特性/属性
+
+  ### `path`
+
+  展示的字符串数组
+
+  ### `autoupdate`
+
+  标识面包屑是否在导航项目被点击时自动更新，默认是 false
+
+  ## 事件
+
+  ### `nav-to`
+
+  点击导航项目时触发相应的 `nav-to` 事件
+
+  ## Example
+
+  ```
+  <jie-breadcrumb path="['foo', 'bar', 'baz', 'qux']"></jie-breadcrumb>
+
+  <jie-breadcrumb autoupdate></jie-breadcrumb>
+
+  <script>
+    var breadcrumb1 = document.querySelectorAll('jie-breadcrumb')[0];
+    var breadcrumb2 = document.querySelectorAll('jie-breadcrumb')[1];
+
+    breadcrumb1.addEventListener('nav-to', function (e) {
+      this.path = e.detail.path;
+    });
+    breadcrumb2.path = ['foo', 'bar', 'baz', 'qux'];
+    breadcrumb2.addEventListener('nav-to', function (e) {
+      console.log(e.type, e.detail.path);
+    });
+  </script>
+  ```
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="jie-breadcrumb" attributes="path, autoupdate">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        list-style: none;
+        background-color: #f5f5f5;
+        border-radius: 2px;
+      }
+      li {
+        display: inline-block;
+        cursor: pointer;
+      }
+      li + li:before {
+        content: "/\00a0";
+        padding: 0 5px;
+        color: #cccccc;
+      }
+      li:last-child {
+        color: #999999;
+        cursor: default;
+      }
+    </style>
+    <template repeat="{{name in path}}">
+      <li on-click="{{clickItem}}">{{name}}</li>
+    </template>
+  </template>
+
+  <script>
+    Polymer('jie-breadcrumb', {
+
+      /**
+       * 标识面包屑是否在导航项目被点击时自动更新，默认是 false
+       * @type {Boolean}
+       */
+      autoupdate: false,
+
+      /**
+       * 展示的字符串数组
+       * @type {Array}
+       */
+      path: [],
+
+      /**
+       * 点击导航项目时触发相应的 `nav-to` 事件
+       */
+      clickItem: function (e, detail, sender) {
+        var index, result;
+        index = Array.prototype.indexOf.call(this.shadowRoot.querySelectorAll('li'), e.target);
+        if (index < this.path.length - 1) {
+          result = this.path.slice(0, index + 1);
+          if (this.autoupdate) {
+            this.path = result;
+          }
+          this.fire('nav-to', {path: result});
+        }
+      }
+    });
+  </script>
+
+</polymer-element>

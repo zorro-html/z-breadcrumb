@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+
+<title>Jie Breadcrumb</title>
+
+<script src="../webcomponentsjs/webcomponents.js"></script>
+<link rel="import" href="jie-breadcrumb.html">
+
+</head>
+<body>
+
+<jie-breadcrumb path="['foo', 'bar', 'baz', 'qux']"></jie-breadcrumb>
+
+<jie-breadcrumb autoupdate></jie-breadcrumb>
+
+<script>
+  var breadcrumb1 = document.querySelectorAll('jie-breadcrumb')[0];
+  var breadcrumb2 = document.querySelectorAll('jie-breadcrumb')[1];
+
+  breadcrumb1.addEventListener('nav-to', function (e) {
+    this.path = e.detail.path;
+  });
+  breadcrumb2.path = ['foo', 'bar', 'baz', 'qux'];
+  breadcrumb2.addEventListener('nav-to', function (e) {
+    console.log(e.type, e.detail.path);
+  });
+</script>
+
+</body>
+</html>
