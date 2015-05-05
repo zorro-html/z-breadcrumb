@@ -1,0 +1,117 @@
+<!--
+
+@element z-breadcrumb
+
+# `<z-breadcrumb>`
+
+Breadcrumb element which could help user nav from the current path
+
+## Attributes / Properties
+
+- `path`: key list of the current path
+- `autoupdate`: whether auto update the `path` when click items, `false` as default
+
+## Events
+
+- `nav-to`: fired when user click the breadcrumb items
+
+-->
+
+<!--
+
+@example default
+
+<z-breadcrumb id="z-breadcrumb-test" path="['foo', 'bar', 'baz', 'qux']"></z-breadcrumb>
+
+<z-breadcrumb id="z-breadcrumb-test-autoupdate" autoupdate></z-breadcrumb>
+
+<script>
+  var breadcrumb1 = document.querySelector('html /deep/ #z-breadcrumb-test');
+  var breadcrumb2 = document.querySelector('html /deep/ #z-breadcrumb-test-autoupdate');
+
+  breadcrumb1.addEventListener('nav-to', function (e) {
+    this.path = e.detail.path;
+  });
+  breadcrumb2.path = ['foo', 'bar', 'baz', 'qux'];
+  breadcrumb2.addEventListener('nav-to', function (e) {
+    console.log(e.type, e.detail.path);
+  });
+</script>
+
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="z-breadcrumb" attributes="path, autoupdate">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        list-style: none;
+        background-color: #f5f5f5;
+        border-radius: 2px;
+      }
+      li {
+        display: inline-block;
+        cursor: pointer;
+      }
+      li + li:before {
+        content: "/\00a0";
+        padding: 0 5px;
+        color: #cccccc;
+      }
+      li:last-child {
+        color: #999999;
+        cursor: default;
+      }
+    </style>
+    <template repeat="{{name in path}}">
+      <li on-click="{{clickItem}}">{{name}}</li>
+    </template>
+  </template>
+
+  <script>
+    Polymer('z-breadcrumb', {
+
+      /**
+       * Fired when user click the breadcrumb items
+       * @event nav-to
+       */
+
+      /**
+       * Whether auto update the `path` when click items
+       * @type {Boolean}
+       */
+      autoupdate: false,
+
+      /**
+       * key list of the current path
+       * @type {Array}
+       */
+      path: null,
+
+      /**
+       * handler of `nav-to` event
+       */
+      clickItem: function (e, detail, sender) {
+        var index, result;
+        index = Array.prototype.indexOf.call(this.shadowRoot.querySelectorAll('li'), e.target);
+        if (index < this.path.length - 1) {
+          result = this.path.slice(0, index + 1);
+          if (this.autoupdate) {
+            this.path = result;
+          }
+          this.fire('nav-to', {path: result});
+        }
+      },
+
+      created: function () {
+        this.path = [];
+      }
+    });
+  </script>
+
+</polymer-element>

@@ -1,33 +1,26 @@
-# breadcrumb
+# `<z-breadcrumb>`
 
-面包屑
+Breadcrumb element which could help user nav from the current path
 
-## 特性/属性
+## Attributes / Properties
 
-### `path`
+- `path`: key list of the current path
+- `autoupdate`: whether auto update the `path` when click items, `false` as default
 
-展示的字符串数组
+## Events
 
-### `autoupdate`
+- `nav-to`: fired when user click the breadcrumb items
 
-标识面包屑是否在导航项目被点击时自动更新，默认是 false
-
-## 事件
-
-### `nav-to`
-
-点击导航项目时触发相应的 `nav-to` 事件
-
-## Example
+## Examples
 
 ```
-<jie-breadcrumb path="['foo', 'bar', 'baz', 'qux']"></jie-breadcrumb>
+<z-breadcrumb id="z-breadcrumb-test" path="['foo', 'bar', 'baz', 'qux']"></z-breadcrumb>
 
-<jie-breadcrumb autoupdate></jie-breadcrumb>
+<z-breadcrumb id="z-breadcrumb-test-autoupdate" autoupdate></z-breadcrumb>
 
 <script>
-  var breadcrumb1 = document.querySelectorAll('jie-breadcrumb')[0];
-  var breadcrumb2 = document.querySelectorAll('jie-breadcrumb')[1];
+  var breadcrumb1 = document.querySelector('html /deep/ #z-breadcrumb-test');
+  var breadcrumb2 = document.querySelector('html /deep/ #z-breadcrumb-test-autoupdate');
 
   breadcrumb1.addEventListener('nav-to', function (e) {
     this.path = e.detail.path;
