@@ -1,17 +1,17 @@
 {
-  "name": "z-progress",
+  "name": "z-breadcrumb",
   "version": "1.0.0",
   "description": "progress element in zorro",
-  "main": "z-progress.html",
+  "main": "z-breadcrumb.html",
   "repository": {
     "type": "git",
-    "url": "git@github.com:zorro-html/z-progress.git"
+    "url": "git@github.com:zorro-html/z-breadcrumb.git"
   },
   "author": "Jinjiang",
   "bugs": {
-    "url": "https://github.com/zorro-html/z-progress/issues"
+    "url": "https://github.com/zorro-html/z-breadcrumb/issues"
   },
-  "homepage": "https://github.com/zorro-html/z-progress",
+  "homepage": "https://github.com/zorro-html/z-breadcrumb",
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-jshint": "^1.10.0",
